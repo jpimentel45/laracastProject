@@ -1,6 +1,6 @@
 <?php
 //use Illuminate\Filesystem\Filesystem;
-//use App\Services\Twitter;
+use App\Services\Twitter;
 use App\Repositories\UserRepository;
 //bind example into service container
 //when fetching out example we want to return a new instance of example class
@@ -23,8 +23,8 @@ use App\Repositories\UserRepository;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function (UserRepository $users) {
+// Route::get('/', function (Twitter $twitter)
+Route::get('/', function () {
     //fetch out of container
         //dd(app('example'));
     //with no service container laravel will look for anythng as App\Example
@@ -33,7 +33,7 @@ Route::get('/', function (UserRepository $users) {
     //if foo had own constructor it will continue cycle until it returns what you want
     //dd(app('App\Example'));
     //dd(app('october'));
-    dd($users);
+    //dd($twitter);
     return view('welcome');
 });
 
