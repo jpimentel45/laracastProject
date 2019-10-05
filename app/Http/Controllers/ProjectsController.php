@@ -10,9 +10,18 @@ use App\Project;
 
 class ProjectsController extends Controller
 {
+    //require auth to creare Project
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['show']);
+    }
     public function index()
     {
-        $projects = Project::all();
+        // auth()->id();
+        // auth()->user();
+        // auth()->check();
+        $projects = Project::where('owner_id', auth()->id())->get();
+        //$projects = Project::all();
         //$projects = auth()->user()->projects;
         //return $projects;
 
@@ -67,12 +76,14 @@ class ProjectsController extends Controller
 
     public function store()
     {
-        Project::create(request()->validate([
+        $attributes = (request()->validate([
             'title' => ['required','min:3'],
-            'description' => ['required', 'min:3']
+            'description' => ['required', 'min:3'],
+            'owner_id' => [auth()->id()]
         ]));
+        $attributes['owner_id'] = auth()->id();
+        Project::create($attributes);
         //in order to use ::create
-        //update your model: protected $fillable =[]
         //and add any value you're trying to save/pass to db
         //ex: protected $fillable = ['title','description'];
         //CAN ALSO USE: protected $guarded = []
