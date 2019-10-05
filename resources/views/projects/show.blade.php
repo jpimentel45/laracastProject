@@ -1,13 +1,40 @@
 @extends('layout')
 
 @section('content')
+<section class='mainContainer'>
     <main>
         <h1>{{$project->title}}</h1>
-        <p>{{$project->description}}</p>
+        <!-- Using echo instead so it can display with html tags instead of having the tags as plain text -->
+        <!-- <p>{{$project->description}}</p> -->
+        <p><?=$project->description?></p>
         <a  href="/projects/{{$project->id}}/edit">
             <button>EDIT ME</button>
         </a>
     </main>
+    <hr>
+<br>
+    <!-- Add a new task -->
+    <section>
+        <form method='POST' action='/projects/{{$project->id}}/tasks'>
+        
+        @csrf
+            <label for="label" for='description'>
+                <p>New Task</p>
+            </label>
+            <section class="control">
+                <input type="text" class="input" name='description' placeholder='New Task' required>
+            </section>
+            <section class="control">
+                <button type="submit" class="button is-link">
+                    <p>Add Task</p>
+                </button>
+            </section>
+
+            @include('errors')
+
+        </form>
+    </section>
+    </section>
     <hr>
 <br>
     @if($project->tasks->count())
@@ -37,27 +64,5 @@
     @endif
     <hr>
 <br>
-    <!-- Add a new task -->
-    <section>
-        <form method='POST' action='/projects/{{$project->id}}/tasks'>
-        
-        @csrf
-            <label for="label" for='description'>
-                <p>New Task</p>
-            </label>
-            <section class="control">
-                <input type="text" class="input" name='description' placeholder='New Task' required>
-            </section>
-            <section class="control">
-                <button type="submit" class="button is-link">
-                    <p>Add Task</p>
-                </button>
-            </section>
 
-            @include('errors')
-
-        </form>
-    </section>
-    <hr>
-<br>
 @endsection

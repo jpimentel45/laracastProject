@@ -1,6 +1,7 @@
 <?php
 //use Illuminate\Filesystem\Filesystem;
-
+//use App\Services\Twitter;
+use App\Repositories\UserRepository;
 //bind example into service container
 //when fetching out example we want to return a new instance of example class
 //bind will return different instances of example for each call
@@ -23,7 +24,7 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (UserRepository $users) {
     //fetch out of container
         //dd(app('example'));
     //with no service container laravel will look for anythng as App\Example
@@ -31,6 +32,8 @@ Route::get('/', function () {
     //looks for foo class and passes it in
     //if foo had own constructor it will continue cycle until it returns what you want
     //dd(app('App\Example'));
+    //dd(app('october'));
+    dd($users);
     return view('welcome');
 });
 
