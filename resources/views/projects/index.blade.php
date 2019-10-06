@@ -18,9 +18,12 @@
             <small>Updated:<?=$project->updated_at;?></small>
             <p><?=$project->description;?></p>
             <br>
+            @can('update', $project)
             <a  href="/projects/{{$project->id}}/edit">
                 <button>EDIT ME</button>
             </a>
+            @endcan
+            @can('delete', $project)
             <form method='POST' action="/projects/{{$project->id}}">
             @method('DELETE')
             @csrf
@@ -30,6 +33,7 @@
                     </section>
                 </section>
             </form>
+            @endcan
         @endforeach
         </ul>
     </section>

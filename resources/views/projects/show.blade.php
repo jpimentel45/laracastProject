@@ -7,9 +7,11 @@
         <!-- Using echo instead so it can display with html tags instead of having the tags as plain text -->
         <!-- <p>{{$project->description}}</p> -->
         <p><?=$project->description?></p>
+        @can('update', $project)
         <a  href="/projects/{{$project->id}}/edit">
             <button>EDIT ME</button>
         </a>
+        @endcan
     </main>
     <hr>
 <br>

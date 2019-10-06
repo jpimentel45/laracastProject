@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Providers;
-
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
+//use Illuminate\Support\Facades\Gate;
+use Illuminate\Contracts\Auth\Access\Gate; 
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Project' => 'App\Policies\ProjectPolicy',
     ];
 
     /**
@@ -21,10 +21,16 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Gate $gate)
     {
         $this->registerPolicies();
 
-        //
-    }
+        //this will allow any user with id of 1 to have access to everything 
+        //as if they were admins
+        $gate->before(function ($user, $ability) {
+            if ($user->id == 1) {
+                return true;
+            }
+        });
+     }
 }
